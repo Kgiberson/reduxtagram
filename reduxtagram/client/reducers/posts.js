@@ -14,7 +14,7 @@ export default function posts(state = [], action) {
       return [
         ...state.slice(0,i), //before the one we are updating
         {...state[i], likes: state[i].likes + 1},
-        ...state.slice(i + 1), //before the one we are updating
+        ...state.slice(i + 1) //before the one we are updating
       ]
     default:
       return state;
