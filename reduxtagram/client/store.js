@@ -14,10 +14,23 @@ import posts from './data/posts';
 const defaultState = {
   posts,
   comments
-}
+};
 
-const store = createStore(rootReducer, defaultState);
+const store = createStore(rootReducer, defaultState, enhancers);
+
+const enhancers = compose(
+    window.devToolsExtension ? window.devToolsExtension() : f => f
+)
 
 export const history = syncHistoryWithStore(browserHistory, store);
+
+//hot reload reducers
+if (module.hot) {
+  module.hot.accept('./reducers/',() => {
+    const nextRootReducer = require('./reducers/index').default;
+    store.replaceReducer(nextRootReducer);
+  });
+}
+
 
 export default store;
